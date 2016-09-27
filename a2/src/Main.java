@@ -43,10 +43,43 @@ public class Main {
         }
     }
 
+
+    public static void doMaxHeapyify(int[] array,int i) {
+        int largest = Integer.MIN_VALUE;
+
+        while(largest != i) {
+            System.out.println(i);
+            int l = lchild(i);
+            int r = rchild(i);
+            if (l <= array.length - 1 && (array[l] > array[i])) {
+                largest = l;
+            } else {
+                largest = i;
+            }
+
+            if (r <= array.length - 1 && (array[r] > array[largest])) {
+                largest = r;
+            }
+            if (largest != i) {
+                int temp = array[i];
+                array[i] = array[largest];
+                array[largest] = temp;
+                i = largest;
+            } else {
+                break;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Random randy = new Random();
-        int[] array = randy.ints(randy.nextInt(100), 0, 100).toArray();
+        int[] randomArray = randy.ints(randy.nextInt(100), 0, 100).toArray();
+        int[] array = Arrays.copyOf(randomArray,randomArray.length);
+        int[] array2 = Arrays.copyOf(randomArray,randomArray.length);
+        assert array.length == array2.length;
         maxHeapify(array);
+        doMaxHeapyify(array2,3);
         System.out.println(Arrays.toString(array));
+        System.out.println(Arrays.toString(array2));
     }
 }

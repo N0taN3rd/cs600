@@ -1,0 +1,164 @@
+\documentclass{article}
+\usepackage[pdftex]{graphicx}
+\usepackage{pgfplots,wrapfig}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\usepackage{bbold}
+\usepackage{braket}
+\usepackage{tikz}
+\usepackage{chngcntr}
+\usepackage[cm]{fullpage}
+\usepackage[margin=1in]{geometry}
+
+\geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+}
+
+\MakeOuterQuote{"}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\newcommand*\Print[1]{\State \textbf{print} #1}
+\newcommand*\Ret{\State \textbf{return}}
+\newcommand*\GT[1]{\State \Goto{#1}}
+\algnewcommand{\algorithmicgoto}{\textbf{go to}}%
+\algnewcommand{\Goto}[1]{\algorithmicgoto~\ref{#1}}%
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+\everymath{\displaystyle}
+
+\usetikzlibrary{trees,calc,arrows.meta,positioning}
+
+\tikzstyle{hollow node}=[circle,draw,inner sep=1.5]
+\tikzstyle{solid node}=[circle,draw,inner sep=1.5,fill=black]
+\tikzstyle{level 1}=[sibling distance=15mm]
+\tikzstyle{level 2}=[sibling distance=25mm]
+\tikzstyle{level 3}=[sibling distance=35mm]
+
+\pgfplotsset{compat=1.13}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+
+\lstset{
+	basicstyle=\footnotesize,
+	breaklines=true,
+	 backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{dkgreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mauve},     % string literal style
+  tabsize=2,	                   % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+
+\Huge{Homework 2}
+
+\Large{CS 600:  Data Structures and Algorithms }
+
+\Large{Fall 2016}
+
+\Large{John Berlin}
+
+
+
+\end{center}
+
+\end{titlepage}
+\section*{Question 1}
+\begin{lstlisting}[
+  numbers=none,
+  mathescape,
+  columns=fullflexible,
+  basicstyle=\fontfamily{lmvtt}\selectfont,
+]
+Problem $4-1(d)$, $(f)$ $(Page \ 107)$.
+Give asymptotic upper and lower bounds for $T(n)$ in each of the following recur-
+rences. Assume that $T(n)$ is constant for $n\leq2$. Make your bounds as tight as
+possible, and justify your answers.
+\end{lstlisting}
+\subsection*{Answer}
+I will be using the masters theorem to solve these problems as well as the problem for q2.
+The masters theorem is defined as $\displaystyle T(n)=aT(\rfrac{n}{b})+F(n)$ with the following cases: 
+\begin{enumerate}
+\item[case 1:] If $F(n)=\theta(n^{\log_ba-\varepsilon})$ for some $\varepsilon > 0$ then $T(n)=\Theta(n^{\log_ba-\varepsilon})$
+\item[case 2:] If $F(n)=\theta(n^{\log_ba})$ then $T(n)=\Theta(n^{\log_ba}\log n)$
+\item[case 3:] If $\Omega=\theta(n^{\log_ba+\varepsilon})$ for some $\varepsilon > 0$ and if $af(\rfrac{n}{b}) \leq cf(n)$ for some $c < 1$ and all significantly large $n$ then $T(n)=\Theta(f(n))$
+\end{enumerate}
+d. $T(n)=7T\left(\rfrac{n}{3}\right)+n^2,\ $ $a=7,\ b=3, \ f(n)=n^2$\newline
+My strategy for these style of questions is to start with case 2 then 3 and finally 1.\newline
+Please note I use $\ldots$ to indicate repeating numbers i.e. point nine seven repeating. 
+\newline\newline
+Case 2:\newline $n^{\log_ba}=\log_37=1.77124$ thus $n^{\log_37} \neq n^2$ because $f(n)=n^2$ making $n^{\log_37} < n^2$ definitely not case 2\newline\newline
+Case 3:\newline $af(\rfrac{n}{b}) \to 7(\rfrac{n}{3})^2 \to \rfrac{7}{9}n^2, \ $ $\rfrac{7}{9}=.7777\ldots \ $ now consider $cf(n)$ where $c=.7777, \ n=8$ so $.7777*8^2=49.7778$ now $n^2$ where $n=8$ which makes $n^2 \to 8^2=64$. So our $af(\rfrac{n}{b})$ is in fact $<cf(n)$ for significantly large n. Thus $T(n)=\Theta(n^2)$\newline \newline
+\noindent
+f. $T(n)=2T(\rfrac{n}{4})+\sqrt{n}, \ $ $a=2, \ b=4, \ f(n)=\sqrt{n}$\newline\newline
+Case 2:\newline $n^{\log_ba}=n^{\log_42}=n^{\rfrac{1}{2}}$ HEY!!!! we know any number to the one half power is equal the square root of the number. By this I declare $T(n)=\Theta(\sqrt{n} \log n)$ ;)
+
+\newpage
+\clearpage
+\section*{Question 2}
+\begin{lstlisting}[
+  numbers=none,
+  mathescape,
+  columns=fullflexible,
+  basicstyle=\fontfamily{lmvtt}\selectfont,
+]
+4-3(h)
+Give asymptotic upper and lower bounds for $T(n)$ in each of the following recur-
+rences. Assume that $T(n)$ is constant for sufficiently small $n$. Make your bounds
+as tight as possible, and justify your answers.
+\end{lstlisting}
+h. $T(n)=T(n-1)+\log n$ Ok well this looks familiar what starts at $n$ and is decremented by one each time.  If you said factorial you would be correct but you knew that all ready ;).  \newline
+Well the first step in the recurrence would be $T(n-1)+\log n \to T(n-2) + \log(n-1) + log n$. But wait a second is what must be going through your mind we are not multiplying anything and yes that is correct we are not doing $\displaystyle n!$. But taking a look at the recurrence relationship of factorial might lead somewhere 
+$n!=\begin{cases}
+  1       & \quad \text{if } n=0\\
+   (n-1)!*n & \quad \text{if } n > 0\\
+\end{cases}$
+The recurrence relationship for $n!$ infers for us that we will be doing this $n$ times which means we must do $\log n \ $ $n$ times. So $T(n)=\Theta(n \log n)$ 
+\newpage
+\clearpage
+\subsection*{Answer}
+\begin{thebibliography}{9}
+
+\bibitem{Levitin126}
+   Anany V. Levitin,
+  Introduction to the Design and Analysis of Algorithms (2nd Edition),
+  2006,
+  Addison-Wesley,
+ Reading, MA
+
+\end{thebibliography} 
+\end{document} 
